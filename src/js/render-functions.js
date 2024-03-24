@@ -9,6 +9,7 @@ export function showGallery(images) {
         'Sorry, there are no images matching your search query. Please try again!',
     });
     closeLoader();
+    form.reset();
   } else {
     const galleryImages = images
       .map(image => {

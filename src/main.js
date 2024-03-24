@@ -43,13 +43,13 @@ form.addEventListener('submit', e => {
             'Sorry, there are no images matching your search query. Please try again!',
         })
       );
-    closeLoader();
+    form.reset();
   } else {
     iziToast.show({
       color: 'red',
       position: 'topRight',
       message: 'Please, search some object',
     });
-    closeLoader();
+    form.reset();
   }
 });
