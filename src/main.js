@@ -9,35 +9,51 @@ import { showGallery } from './js/render-functions';
 export const form = document.querySelector('.form');
 export const gallery = document.querySelector('.gallery');
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
-
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const query = e.currentTarget.elements.inputName.value.trim();
-  gallery.innerHTML = `<div class="loader"></div>`;
-  if (query === '') {
-    iziToast.error({
-      color: 'red',
-      position: 'topRight',
-      message: 'Please, search some object',
-    });
-  } else {
+  gallery.innerHTML = '';
+  const query = e.currentTarget.elements.inputname.value.trim();
+  if (query !== '') {
     getPhotos(query)
-      .then(data => {
-        const markup = showGallery(data.hits);
-        gallery.innerHTML = markup;
-        lightbox.refresh();
+      .then(res => {
+        showGallery(res.hits);
+        form.reset();
       })
-      .catch(error => {
+      .catch(error =>
         iziToast.error({
           color: 'red',
           position: 'topRight',
           message:
             'Sorry, there are no images matching your search query. Please try again!',
-        });
-      });
+        })
+      );
+  } else {
+    iziToast.show({
+      color: 'red',
+      position: 'topRight',
+      message: 'Please, search some object',
+    });
   }
 });
+
+//   if (query === '') {
+//     iziToast.error({
+//       color: 'red',
+//       position: 'topRight',
+//       message: 'Please, search some object',
+//     });
+//   } else {
+//     getPhotos(query)
+//       .then(data => {
+//         showGallery(data.hits);
+//         lightbox.refresh();
+//       })
+//       .catch(error => {
+//         iziToast.error({
+//           color: 'red',
+//           position: 'topRight',
+//           message:
+//             'Sorry, there are no images matching your search query. Please try again!',
+//         });
+//       });
+//   }

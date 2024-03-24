@@ -3,14 +3,12 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { gallery } from '../main';
+import { gallery, lightbox } from '../main';
 
 export function showGallery(images) {
-  gallery.innerHTML = '';
-
   const galleryImages = images
-    .map(
-      image => `<li class="gallery-item">
+    .map(image => {
+      return `<li class="gallery-item">
         <a="${image.largeImageURL}">
         <img class="photo" src="${image.webformatURL}" data-source="${image.largeImageURL}" alt="${image.tags}" />
         </a>
@@ -32,8 +30,8 @@ export function showGallery(images) {
             <p>${image.downloads}</p>
           </li>
         </ul>
-      </li>`
-    )
+      </li>`;
+    })
     .join('');
 
   gallery.insertAdjacentHTML('beforeend', galleryImages);

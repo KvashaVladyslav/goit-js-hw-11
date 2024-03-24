@@ -3,9 +3,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { form } from '../main';
-import { gallery } from '../main';
-
 export function getPhotos(query) {
   const baseUrl = 'https://pixabay.com';
   const endPoint = '/api/';
