@@ -1,4 +1,4 @@
-import { gallery, lightbox } from '../main';
+import { gallery, lightbox, closeLoader } from '../main';
 
 export function showGallery(images) {
   if (images.length === 0) {
@@ -8,6 +8,7 @@ export function showGallery(images) {
       message:
         'Sorry, there are no images matching your search query. Please try again!',
     });
+    closeLoader();
   } else {
     const galleryImages = images
       .map(image => {
@@ -41,4 +42,5 @@ export function showGallery(images) {
 
     lightbox.refresh();
   }
+  closeLoader();
 }

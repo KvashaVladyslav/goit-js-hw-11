@@ -6,7 +6,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 import { getPhotos } from './js/pixabay-api';
 import { showGallery } from './js/render-functions';
 
-export const form = document.querySelector('.form');
+const form = document.querySelector('.form');
 export const gallery = document.querySelector('.gallery');
 
 export const lightbox = new SimpleLightbox('.gallery a', {
@@ -14,8 +14,19 @@ export const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
+const loaderBox = document.querySelector('.loader');
+
+function showLoader() {
+  loaderBox.classList.remove('visually-hidden');
+}
+
+export function closeLoader() {
+  loaderBox.classList.add('visually-hidden');
+}
+
 form.addEventListener('submit', e => {
   e.preventDefault();
+  showLoader();
   gallery.innerHTML = '';
   const query = e.currentTarget.elements.inputname.value.trim();
   if (query !== '') {
@@ -32,11 +43,13 @@ form.addEventListener('submit', e => {
             'Sorry, there are no images matching your search query. Please try again!',
         })
       );
+    closeLoader();
   } else {
     iziToast.show({
       color: 'red',
       position: 'topRight',
       message: 'Please, search some object',
     });
+    closeLoader();
   }
 });
