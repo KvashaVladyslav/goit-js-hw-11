@@ -1,16 +1,19 @@
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
-
 import { gallery, lightbox } from '../main';
 
 export function showGallery(images) {
-  const galleryImages = images
-    .map(image => {
-      return `<li class="gallery-item">
-        <a="${image.largeImageURL}">
-        <img class="photo" src="${image.webformatURL}" data-source="${image.largeImageURL}" alt="${image.tags}" />
+  if (images.length === 0) {
+    iziToast.error({
+      color: 'red',
+      position: 'topRight',
+      message:
+        'Sorry, there are no images matching your search query. Please try again!',
+    });
+  } else {
+    const galleryImages = images
+      .map(image => {
+        return `<li class="gallery-item">
+        <a href="${image.largeImageURL}">
+        <img class="photo" src="${image.webformatURL}" alt="${image.tags}" />
         </a>
         <ul class="info-list">
           <li class="info-list-item">
@@ -31,8 +34,11 @@ export function showGallery(images) {
           </li>
         </ul>
       </li>`;
-    })
-    .join('');
+      })
+      .join('');
 
-  gallery.insertAdjacentHTML('beforeend', galleryImages);
+    gallery.insertAdjacentHTML('beforeend', galleryImages);
+
+    lightbox.refresh();
+  }
 }

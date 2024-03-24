@@ -9,6 +9,11 @@ import { showGallery } from './js/render-functions';
 export const form = document.querySelector('.form');
 export const gallery = document.querySelector('.gallery');
 
+export const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 form.addEventListener('submit', e => {
   e.preventDefault();
   gallery.innerHTML = '';
@@ -35,25 +40,3 @@ form.addEventListener('submit', e => {
     });
   }
 });
-
-//   if (query === '') {
-//     iziToast.error({
-//       color: 'red',
-//       position: 'topRight',
-//       message: 'Please, search some object',
-//     });
-//   } else {
-//     getPhotos(query)
-//       .then(data => {
-//         showGallery(data.hits);
-//         lightbox.refresh();
-//       })
-//       .catch(error => {
-//         iziToast.error({
-//           color: 'red',
-//           position: 'topRight',
-//           message:
-//             'Sorry, there are no images matching your search query. Please try again!',
-//         });
-//       });
-//   }
